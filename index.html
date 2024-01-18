@@ -39,20 +39,27 @@
 
         .user{
             display: flex;
-            flex-direction: row;
             flex-wrap: wrap;
             margin-left: 50px;
             margin-right: 50px;
             margin-top: 30px;
+            border: 1px gray solid;
+
         }
 
         #user_image{
-            flex-basis: 30%;
+            /* flex-basis: 30%; */
+            padding: 20px;
             
         }
 
+        .u_img{
+            height:250px;
+            width: 250px;
+        }
+
         #user_info{
-            flex-basis: 70%;
+            padding: 20px;
         }
 
         #user_repo{
@@ -72,6 +79,14 @@
             #user_repo {
                 margin: 10px;
                 grid-template-columns: repeat(1, 1fr);
+            }
+
+            .user{
+                margin: 10px;
+                justify-content: center;
+            }
+            #user_info{
+                padding: 5px;
             }
         }
 
@@ -114,11 +129,11 @@
             const user_data = await user_res.json();
             user_image.innerHTML = 
             `
-                <img src = "${user_data.avatar_url}"> </img>
+                <img src = "${user_data.avatar_url}" class="u_img"> </img>
             `;
             user_info.innerHTML = 
             `
-
+                <strong>${user_data.name.toUpperCase()}</strong>
             `
 
             const res = await fetch(`https://api.github.com/users/${user_name}/repos`);
@@ -133,7 +148,7 @@
                     `
                         <div class="repo">
                             <h3>${repos.name}</h3>
-
+                            
                         </div>
                     `
                 ).join('')}

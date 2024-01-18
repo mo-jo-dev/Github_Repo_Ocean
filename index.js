@@ -10,11 +10,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 const startServer = async () => {
-    // const res = await axios.get(`https://api.github.com/users/mo-jo-dev`);
+    const res = await axios.get(`https://api.github.com/users/mo-jo-dev`);
     // res.data.objects.forEach(i => {
     //     console.log(i);
     // });
-    // console.log(res.data);
+    console.log(res);
     app.listen(PORT,() => {
         console.log(`SERVER STARTED IN PORT: ${PORT}`);
     })
