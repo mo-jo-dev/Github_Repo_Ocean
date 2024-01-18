@@ -226,7 +226,7 @@
 
 
 
-        form.addEventListener("submit", (e) => {
+        form.addEventListener("submit", async (e) => {
         e.preventDefault();
             const user_name = search.value.trim();
             const check = await fetch(`https://api.github.com/users/${user_name}`);
@@ -234,7 +234,7 @@
             if (!user_name) {
                 alert("Please type in a search term");
             }
-            else if(data.data.message == 'Not Found'){
+            else if(data.message == 'Not Found'){
                 alert("Incorrect Username!! Try Again");
             } 
             else {
