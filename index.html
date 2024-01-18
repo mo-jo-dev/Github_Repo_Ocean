@@ -109,18 +109,27 @@
             padding: 4px 10px;
         }
 
+        .repo_link{
+            text-decoration: none;
+        }
+
         @media only screen and (max-width: 800px) {
             #user_repo {
                 margin: 10px;
                 grid-template-columns: repeat(1, 1fr);
             }
 
+            #user_image{
+                margin: 0 auto;
+            }
+
             .user{
                 margin: 10px;
-                justify-content: center;
             }
+
             #user_info{
-                padding: 5px;
+                text-align: left;
+                padding-left: 20px;
             }
         }
 
@@ -170,55 +179,65 @@
             user_info.innerHTML = 
             `
                 <h2>${user_data.name.toUpperCase()}</h2>
-                <h3>Username: ${user_data.login}</h3>
+                <h3>Username: <a href = "https://github.com/${user_data.login}" target = "_blank" class="repo_link">${user_data.login}</a></h3>
                 <p><strong>Institution:</strong> ${user_data.company}</p>
                 <p><strong>Location:</strong> ${user_data.location}</p>
                 <p><strong>Public Repositories:</strong> ${user_data.public_repos}</p>
+                <p><strong>Following:</strong> ${user_data.following}</p>
                 <p><strong>Followers:</strong> ${user_data.followers}</p>
             `
 
-            const res = await fetch(`https://api.github.com/users/${user_name}/repos?page=${page}`);
+            const res = await fetch(`https://api.github.com/users/${user_name}/repos?per_page=10&page=${page}`);
             const data = await res.json();
-            showRepo(data, user_data.public_repos);
+            showRepo(data, user_data.login, user_data.public_repos);
         }
+
         var count_ = 1;
-        const showRepo = (data, public_repos) => {
+        const showRepo = (data, user_name, public_repos) => {
             user_repo.innerHTML = 
             `    ${data.map(
                     repos=>
                     `
                         <div class="repo">
                             <h3>${repos.name}</h3>
-                            
                         </div>
                     `
                 ).join('')}
             `
-            if(public_repos - 30*count_ > 0 ){
-                count_++;
-            }
+            
             more.innerHTML = `
-                ${public_repos - 30*count_ > 0 ? `<button class="btn" onclick="getMoreTests('${data.login}', ${count_}, ${public_repos}')">Prev</button>` : ''}
-                ${public_repos - 30*count_ > 0 ? `<button class="btn" onclick="getMoreRepos('${data.login}', ${count_}, ${public_repos})">Next</button>` : ''}
+                ${count_ > 1 ? `<button class="btn" onclick="getMoreRepos('${user_name}','${public_repos}','prev')">Prev</button>` : ''}
+                ${public_repos - 10*count_ > 0 ? `<button class="btn" onclick="getMoreRepos('${user_name}','${public_repos}','next')">Next</button>` : ''}
             `;
 
         } 
 
-        async function getMoreRepos(user_name, page, public_repos){
-            const res = await fetch(`https://api.github.com/users/${user_name}/repos?page=${page}`);
+        async function getMoreRepos(user_name, public_repos, check){
+            if(check == 'next') {
+                count_ = count_ + 1;
+            }
+            else {
+                count_ = count_ - 1;
+            }
+            const res = await fetch(`https://api.github.com/users/${user_name}/repos?per_page=10&page=${count_}`);
             const data = await res.json();
-            showRepo(data, public_repos);
+            showRepo(data, user_name, public_repos);
         }
 
 
 
         form.addEventListener("submit", (e) => {
         e.preventDefault();
-        
-        const user_name = search.value.trim();
+            const user_name = search.value.trim();
+            const check = await fetch(`https://api.github.com/users/${user_name}`);
+            const data = await check.json();
             if (!user_name) {
                 alert("Please type in a search term");
-            } else {
+            }
+            else if(data.data.message == 'Not Found'){
+                alert("Incorrect Username!! Try Again");
+            } 
+            else {
                 getRepo(user_name,1);
             }
         });
