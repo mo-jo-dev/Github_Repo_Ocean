@@ -59,7 +59,7 @@
         }
 
         #user_info{
-            padding: 20px;
+            text-align: left;
         }
 
         #user_repo{
@@ -74,6 +74,39 @@
             padding: 10px;
             margin: 5px;
             overflow: hidden;
+        }
+
+        .container {
+            margin: 30px auto;
+            max-width: 100%;
+            width: 500px;
+        }
+        
+        .container h2 {
+            font-weight: 300;
+        }
+        
+        .container p {
+            text-align: center;
+        }
+        
+        .centered {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .centered button {
+            transform: scale(1.3);
+            margin: 15px;
+            cursor:pointer;
+        }
+
+        .btn {
+            background-color: #8d56fd;
+            border: 0;
+            border-radius: 10px;
+            color: #fff;
+            padding: 4px 10px;
         }
 
         @media only screen and (max-width: 800px) {
@@ -117,6 +150,7 @@
     </div>
 
     <div id="more" class="container centered">
+
     </div>
     <script>
         const form = document.getElementById("form");
@@ -124,25 +158,31 @@
         const user_image = document.getElementById("user_image");
         const user_info = document.getElementById("user_info");
         const user_repo = document.getElementById("user_repo");
+        const more = document.getElementById("more");
 
-        const getRepo = async (user_name) => {
+        const getRepo = async (user_name, page) => {
             const user_res = await fetch(`https://api.github.com/users/${user_name}`);
             const user_data = await user_res.json();
             user_image.innerHTML = 
             `
-                <img src = "${user_data.avatar_url}" class="u_img"> </img>
+                <img src = "${user_data.avatar_url}" class="u_img"></img>
             `;
             user_info.innerHTML = 
             `
-                <strong>${user_data.name.toUpperCase()}</strong>
+                <h2>${user_data.name.toUpperCase()}</h2>
+                <h3>Username: ${user_data.login}</h3>
+                <p><strong>Institution:</strong> ${user_data.company}</p>
+                <p><strong>Location:</strong> ${user_data.location}</p>
+                <p><strong>Public Repositories:</strong> ${user_data.public_repos}</p>
+                <p><strong>Followers:</strong> ${user_data.followers}</p>
             `
 
-            const res = await fetch(`https://api.github.com/users/${user_name}/repos`);
+            const res = await fetch(`https://api.github.com/users/${user_name}/repos?page=${page}`);
             const data = await res.json();
-            showRepo(data);
+            showRepo(data, user_data.public_repos);
         }
-
-        const showRepo = (data) => {
+        var count_ = 1;
+        const showRepo = (data, public_repos) => {
             user_repo.innerHTML = 
             `    ${data.map(
                     repos=>
@@ -154,7 +194,21 @@
                     `
                 ).join('')}
             `
+            if(public_repos - 30*count_ > 0 ){
+                count_++;
+            }
+            more.innerHTML = `
+                ${public_repos - 30*count_ > 0 ? `<button class="btn" onclick="getMoreTests('${data.login}', ${count_}, ${public_repos}')">Prev</button>` : ''}
+                ${public_repos - 30*count_ > 0 ? `<button class="btn" onclick="getMoreRepos('${data.login}', ${count_}, ${public_repos})">Next</button>` : ''}
+            `;
+
         } 
+
+        async function getMoreRepos(user_name, page, public_repos){
+            const res = await fetch(`https://api.github.com/users/${user_name}/repos?page=${page}`);
+            const data = await res.json();
+            showRepo(data, public_repos);
+        }
 
 
 
@@ -165,7 +219,7 @@
             if (!user_name) {
                 alert("Please type in a search term");
             } else {
-                getRepo(user_name);
+                getRepo(user_name,1);
             }
         });
 
