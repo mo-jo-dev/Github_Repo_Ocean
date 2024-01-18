@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Github Repo Finder</title>
+    <!-- <link rel="stylesheet" href="./assets/css/style.css"> -->
+    <script src="https://requirejs.org/docs/release/2.3.5/minified/require.js"></script>
+    <script src="https://browser.sentry-cdn.com/7.93.0/bundle.min.js"></script>
+    <style>
+        #search{
+            width: 50%;
+            padding: 10px;
+        }
+
+        button{
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        button:active{
+            transform: scale(0.95);
+        }
+
+        input:focus,button:focus{
+           outline: none;
+        }
+
+        .form_ip{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        header>h1{
+            text-align: center;
+        }
+
+        .user{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            margin-left: 50px;
+            margin-right: 50px;
+            margin-top: 30px;
+        }
+
+        #user_image{
+            flex-basis: 30%;
+            
+        }
+
+        #user_info{
+            flex-basis: 70%;
+        }
+
+        #user_repo{
+            margin: 50px;
+            display: grid;
+            row-gap: 50px;
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .repo{
+            border: 1px solid black;
+            padding: 10px;
+            margin: 5px;
+        }
+
+        @media only screen and (max-width: 800px) {
+            #user_repo {
+                margin: 10px;
+                grid-template-columns: repeat(1, 1fr);
+            }
+        }
+
+    </style>
+    </head>
+<body>
+    
+    <header>
+        <h1>Github Repository Finder</h1>
+        <form id="form" class="form_ip">
+            <input type="search" name="github_user" id="search" placeholder="Your Username">
+            <button>Search</button>
+        </form>
+    </header>
+
+    <div class="user">
+        <div id="user_image">
+
+        </div>
+        <div id="user_info">
+
+        </div>
+    </div>
+
+    <div id="user_repo">
+
+    </div>
+
+    <div id="more" class="container centered">
+    </div>
+    <script>
+        const form = document.getElementById("form");
+        const search = document.getElementById("search");
+        const user_image = document.getElementById("user_image");
+        const user_info = document.getElementById("user_info");
+        const user_repo = document.getElementById("user_repo");
+
+        const getRepo = async (user_name) => {
+            const user_res = await fetch(`https://api.github.com/users/${user_name}`);
+            const user_data = await user_res.json();
+            user_image.innerHTML = 
+            `
+                <img src = "${user_data.avatar_url}"> </img>
+            `;
+            user_info.innerHTML = 
+            `
+
+            `
+
+            const res = await fetch(`https://api.github.com/users/${user_name}/repos`);
+            const data = await res.json();
+            showRepo(data);
+        }
+
+        const showRepo = (data) => {
+            user_repo.innerHTML = 
+            `    ${data.map(
+                    repos=>
+                    `
+                        <div class="repo">
+                            <h3>${repos.name}</h3>
+
+                        </div>
+                    `
+                ).join('')}
+            `
+        } 
+
+
+
+        form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        
+        const user_name = search.value.trim();
+            if (!user_name) {
+                alert("Please type in a search term");
+            } else {
+                getRepo(user_name);
+            }
+        });
+
+
+    </script>
+    <!-- <script src="./assets/js/script.js"></script> -->
+    <!-- <script src="./assets/js/modal.js"></script> -->
+</body>
+</html>
