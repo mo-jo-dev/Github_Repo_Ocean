@@ -242,13 +242,13 @@
             const data = await res.json();
             showRepo(data, user_data.login, user_data.public_repos);
         }
-
+        
         var count_ = 1;
         const showRepo = async (data, user_name, public_repos) => {
             // const lang_data = (await fetch(`https://api.github.com/repos/${user_name}/${repos.name}/languages`)).json().data;
             user_repo.innerHTML = 
             `    ${data.map(
-                    repos=>
+                repos=>
                     `
                         <div class="repo">
                             <h4>${repos.name}</h4>
