@@ -60,11 +60,14 @@
             margin-right: 50px;
             margin-top: 30px;
             border: 1px gray solid;
+            background-color: rgba(0, 0, 0, 0.103);
+        }
 
+        .user:hover{
+            background-color: rgba(0, 0, 0, 0.253);
         }
 
         #user_image{
-            /* flex-basis: 30%; */
             padding: 20px;
             
         }
@@ -88,10 +91,15 @@
 
         .repo{
             border: 1px solid black;
-            padding: 10px;
+            padding: 0 0 0 20px;
             margin: 5px;
             overflow: hidden;
             color: white;
+            background-color: rgba(0, 0, 0, 0.103);
+        }
+
+        .repo:hover{
+            background-color: rgba(0, 0, 0, 0.253);
         }
 
         .container {
@@ -146,6 +154,10 @@
 
         .repo_attribute{
             color: rgb(255, 147, 147);
+        }
+
+        .repo_attr{
+            color: rgb(193, 250, 78);
         }
 
         .repo_user_name{
@@ -239,7 +251,11 @@
                     repos=>
                     `
                         <div class="repo">
-                            <p>${repos.name}</p>
+                            <h4>${repos.name}</h4>
+                            <p><strong class="repo_attr">Visibility:</strong> ${repos.visibility}</p>
+                            <p><strong class="repo_attr">No. of Forks:</strong> ${repos.forks}</p>
+                            <p><strong class="repo_attr">Watchers:</strong> ${repos.watchers}</p>
+
                             ${repos.language != null ? `<p class="repo_lang">${repos.language}</p>` : ''
                             }
                         </div>
