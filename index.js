@@ -10,7 +10,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 const startServer = async () => {
-    const res = await axios.get(`https://api.github.com/users/mo-jo-dev`);
+    // const res = await axios.get(`https://api.github.com/users/mo-jo-dev/repos?per_page=5`);
+    const res = await axios.get(`https://api.github.com/repos/mo-jo-dev/Github_Repo_Finder/languages`);
     // res.data.objects.forEach(i => {
         //     console.log(i);
         // });
