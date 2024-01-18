@@ -1,6 +1,3 @@
-const result = document.getElementById("result");
-const more = document.getElementById("more");
-
 function padTo2Digits(num) {
     return num.toString().padStart(2, '0');
   }
@@ -20,152 +17,91 @@ function padTo2Digits(num) {
       ].join(':')
     );
   }
-// const apiURL = "https://clist.by";
 
-async function getData() {
-    const res = await fetch(`https://clist.by:443/api/v1/contest/?username=mo-jo-dev&api_key=0965da70e684b0485eedc5cf7209098afe12519a&limit=15&offset=0&start__gte=${formatDate(new Date())}&order_by=start&duration__lt=999999`);
-    const data = await res.json();
-    // console.log(data);
-    showData(data);
-}
+const form = document.getElementById("form");
+const search = document.getElementById("search");
+const user_image = document.getElementById("user_image");
+const user_info = document.getElementById("user_info");
+const user_repo = document.getElementById("user_repo");
+const more = document.getElementById("more");
 
-function findPlatform(data){
-  if(data == 'codeforces.com'){
-    return 'assets/img/codeforces.png'
-  }
-  if(data == 'codingninjas.com/codestudio'){
-    return 'assets/img/codingninjas.png'
-  }
-  if(data == 'atcoder.jp'){
-    return 'assets/img/atcoder.png'
-  }
-  if(data == 'codechef.com'){
-    return 'assets/img/codechef.png'
-  }
-  if(data == 'dmoj.ca'){
-    return 'assets/img/dmoj.png'
-  }
-  if(data == 'cups.online'){
-    return 'assets/img/allcup.svg'
-  }
-  if(data == 'yukicoder.me'){
-    return 'assets/img/yukicoder.png'
-  }
-  if(data == 'hackerearth.com'){
-    return 'assets/img/HackerEarth.png'
-  }
-  if(data == 'topcoder.com'){
-    return 'assets/img/topcoder.png'
-  }
-  if(data == 'geeksforgeeks.org'){
-    return 'assets/img/GeeksforGeeks.png'
-  }
-  if(data == 'tlx.toki.id'){
-    return 'assets/img/tlx.png'
-  }
-  if(data == 'leetcode.com'){
-    return 'assets/img/LeetCode.png'
-  }
-  if(data == 'ctftime.org'){
-    return 'assets/img/ctf_time.svg'
-  }
-  if(data == 'hackerrank.com'){
-    return 'assets/img/hackerrank.svg'
-  }
-  if(data == 'robocontest.uz'){
-    return 'assets/img/hackerrank.svg'
-  }
-}
-
-function findPlatformTitle(data){
-  if(data == 'codeforces.com'){
-    return 'CodeForces'
-  }
-  if(data == 'codingninjas.com/codestudio'){
-    return 'CodingNinjas'
-  }
-  if(data == 'atcoder.jp'){
-    return 'AtCoder'
-  }
-  if(data == 'codechef.com'){
-    return 'Codechef'
-  }
-  if(data == 'dmoj.ca'){
-    return 'DMOJ'
-  }
-  if(data == 'cups.online'){
-    return 'All Cups'
-  }
-  if(data == 'yukicoder.me'){
-    return 'YukiCoder'
-  }
-  if(data == 'hackerearth.com'){
-    return 'HackerEarth'
-  }
-  if(data == 'topcoder.com'){
-    return 'TopCoder'
-  }
-  if(data == 'geeksforgeeks.org'){
-    return 'GeeksForGeeks'
-  }
-  if(data == 'tlx.toki.id'){
-    return 'TLX'
-  }
-  if(data == 'leetcode.com'){
-    return 'LeetCode'
-  }
-  if(data == 'ctftime.org'){
-    return 'CTF Time'
-  }
-}
-
-function showData(data){
-    result.innerHTML = `
-    <div class="box">
-      <ul class="test">
-          ${data.objects.map(
-              code => `
-              <li class="list"><span>
-              <strong>${code.event.toUpperCase()}</strong>
-              - <span class="comp_name">${findPlatformTitle(code.resource.name)}</span> 
-                  <span id="myBtn" class="comp_date"><img src = "./assets/icons/calender.jpg"></span>
-                    <div id="myModal" class="modal">
-                        <div class="modal-content">
-                            <span class="close">&times;</span>
-                            <p>Some text in the Modal..</p>
-                        </div>
-                    </div>
-              </span>
-              <h3><a href="${code.href}" target="_blank"><img class = "comp_icon" src = "${findPlatform(code.resource.name)}"></a></h3>
-              </li>
-              `
-          ).join('')}
-      </ul>
-      </div>
+const getRepo = async (user_name, page) => {
+    const user_res = await fetch(`https://api.github.com/users/${user_name}`);
+    const user_data = await user_res.json();
+    user_image.innerHTML = 
+    `
+        <img src = "${user_data.avatar_url}" class="u_img"></img>
     `;
-    // if(data.meta.offset - 15 >= 0) {
-    //   const url_off_g = data.meta.offset - 15;
-    // } else {
-    //   alert("No Data Found");
-    // }
-    // if(data.meta.offset + 15 <= 45) {
-    //   const url_off_l = data.meta.offset + 15;
-    // } else {
-    //   alert("No Data Found");
-    // }
-    if(true){
+    user_info.innerHTML = 
+    `
+        <h2 class="repo_user_name">${user_data.name.toUpperCase()}</h2>
+        <h3 class="repo_attribute">Username: <a href = "https://github.com/${user_data.login}" target = "_blank" class="repo_link">${user_data.login}</a></h3>
+        <p><strong class="repo_attribute">Institution:</strong> ${user_data.company}</p>
+        <p><strong class="repo_attribute">Location:</strong> ${user_data.location}</p>
+        <p><strong class="repo_attribute">Public Repositories:</strong> ${user_data.public_repos}</p>
+        <p><strong class="repo_attribute">Following:</strong> ${user_data.following}</p>
+        <p><strong class="repo_attribute">Followers:</strong> ${user_data.followers}</p>
+    `
+
+    const res = await fetch(`https://api.github.com/users/${user_name}/repos?per_page=10&page=${page}`);
+    const data = await res.json();
+    showRepo(data, user_data.login, user_data.public_repos);
+}
+
+var count_ = 1;
+const showRepo = async (data, user_name, public_repos) => {
+    // const lang_data = (await fetch(`https://api.github.com/repos/${user_name}/${repos.name}/languages`)).json().data;
+    // <p><strong class="repo_attr"></strong> ${formatDate(repos.created_at)}</p>
+    user_repo.innerHTML = 
+    `    ${data.map(
+        repos=>
+            `
+                <div class="repo">
+                    <h4>${repos.name}</h4>
+                    <p><strong class="repo_attr">Visibility:</strong> ${repos.visibility}</p>
+                    <p><strong class="repo_attr">No. of Forks:</strong> ${repos.forks}</p>
+                    <p><strong class="repo_attr">Watchers:</strong> ${repos.watchers}</p>
+            
+                    ${repos.language != null ? `<p class="repo_lang">${repos.language}</p>` : ''
+                    }
+                </div>
+            `
+        ).join('')}
+    `
+    
     more.innerHTML = `
-      ${data.meta.offset - 15 >= 0 ? `<button class="btn" onclick="getMoreTests('${data.meta.offset - 15}')">Prev</button>` : ''}
-      ${data.meta.offset + 15 <= 45 ? `<button class="btn" onclick="getMoreTests('${data.meta.offset + 15}')">Next</button>` : ''}
-      `;
+        ${count_ > 1 ? `<button class="btn" onclick="getMoreRepos('${user_name}','${public_repos}','prev')">Prev</button>` : ''}
+        ${public_repos - 10*count_ > 0 ? `<button class="btn" onclick="getMoreRepos('${user_name}','${public_repos}','next')">Next</button>` : ''}
+    `;
+
+} 
+
+async function getMoreRepos(user_name, public_repos, check){
+    if(check == 'next') {
+        count_ = count_ + 1;
     }
+    else {
+        count_ = count_ - 1;
+    }
+    const res = await fetch(`https://api.github.com/users/${user_name}/repos?per_page=10&page=${count_}`);
+    const data = await res.json();
+    showRepo(data, user_name, public_repos);
 }
 
 
-async function getMoreTests(url_offset){
-  const res = await fetch(`https://clist.by:443/api/v1/contest/?username=mo-jo-dev&api_key=0965da70e684b0485eedc5cf7209098afe12519a&limit=15&offset=${url_offset}&start__gte=${formatDate(new Date())}&order_by=start&duration__lt=999999`);
-  const data = await res.json();
-  showData(data);
-}
 
-getData();
+form.addEventListener("submit", async (e) => {
+e.preventDefault();
+    const user_name = search.value.trim();
+    const check = await fetch(`https://api.github.com/users/${user_name}`);
+    const data = await check.json();
+    if (!user_name) {
+        alert("Please type in a search term");
+    }
+    else if(data.message == 'Not Found'){
+        alert("Incorrect Username!! Try Again");
+    } 
+    else {
+        getRepo(user_name,1);
+    }
+});

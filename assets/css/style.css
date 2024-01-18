@@ -1,243 +1,174 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
+        body{
+            background-image: url('../img/background.png');z-index: 1;
+        }
+        #search{
+            width: 50%;
+            padding: 10px;
+            border-radius: 10px;
+            margin: 10px;
+        }
 
-body {
-  /* background-color: rgb(32, 33, 36); */
-  background-image: url('../img/background.png');z-index: 1;
-}
+        .main_btn{
+            border-radius: 10px;
+            background-color: #bb99ff;
+        }
 
-.header {
-  margin: 20px;
-  display: flex;
-  justify-content: space-between;
-  background-color: #65adff;
-  padding: 0.8rem 0.8rem 0.5rem 0.8rem;
-  top: 0;
-  z-index: 100;
-  margin: 0 5px 5px 5px;
-  border-radius: 10px;
-}
+        .main_btn:hover{
+            background-color: rgb(190, 255, 255);
+            transition: background 1s;
+        }
 
-.leftnav a {
-  margin-right: 25px;
-}
+        button{
+            cursor: pointer;
+            padding: 10px;
+        }
 
-#seticon {
-  transition: transform 1s;
-}
+        button:active{
+            transform: scale(0.95);
+        }
 
-#seticon:hover {
-  -ms-transform: rotate(270deg);
-  transform: rotate(270deg);
-}
+        input:focus,button:focus{
+           outline: none;
+        }
 
-#giticon:hover {
-  animation: shake 0.82s cubic-bezier(.36, .07, .19, .97) both;
-  transform: translate3d(0, 0, 0);
-  backface-visibility: hidden;
-  perspective: 1000px;
-}
+        .form_ip{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-.drawer-body {
-  font-family: 'Poppins', sans-serif;
-  height: 480px;
-  width: 500px;
-}
+        header>h1{
+            text-align: center;
+            color: #fff;
+        }
 
-@keyframes shake {
-  10%,
-  90% {
-      transform: translate3d(-1px, 0, 0);
-  }
-  20%,
-  80% {
-      transform: translate3d(2px, 0, 0);
-  }
-  30%,
-  50%,
-  70% {
-      transform: translate3d(-4px, 0, 0);
-  }
-  40%,
-  60% {
-      transform: translate3d(4px, 0, 0);
-  }
-}
+        .user{
+            display: flex;
+            flex-wrap: wrap;
+            margin-left: 50px;
+            margin-right: 50px;
+            margin-top: 30px;
+            border: 1px gray solid;
+            background-color: rgba(0, 0, 0, 0.103);
+        }
 
-.rightnav img {
-  margin: 0px 1.5rem;
-}
+        .user:hover{
+            background-color: rgba(0, 0, 0, 0.253);
+        }
 
+        #user_image{
+            padding: 20px;
+            
+        }
 
-.contestinfo {
-  /* background-color: rgb(32, 33, 36); */
-  position: relative;
-  width: 100%;
-}
+        .u_img{
+            height:250px;
+            width: 250px;
+        }
 
-.contestinfo>p{
-  text-align: center;
-  color: rgb(255, 157, 157);
-  font-weight: bold;
-}
+        #user_info{
+            text-align: left;
+            color: white;
+        }
 
-.ongoingcontestheader
-{
-    text-align: center;
-    padding: 0.5rem;
-    color: white;
-    font-weight: bolder;
-    font-size: x-large;
-}
+        #user_repo{
+            margin: 50px;
+            display: grid;
+            row-gap: 50px;
+            grid-template-columns: repeat(2, 1fr);
+        }
 
-.comp_icon{
-  height: 50px;
-  width: 50px;
-  background-color: #fff0c2;
-  padding: 5px;
-  border-radius:100%;
-}
+        .repo{
+            border: 1px solid black;
+            padding: 0 0 0 20px;
+            margin: 5px;
+            overflow: hidden;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.103);
+        }
 
-.comp_date>img{
-  height: 20px;
-  width: 20px;
-  background-color: #52514e;
-  margin-left: 5px;
-  border-radius:100%;
-}
-.comp_date>img:hover{
-  cursor: pointer;
-}
+        .repo:hover{
+            background-color: rgba(0, 0, 0, 0.253);
+        }
 
-.comp_icon:hover{
-    scale: 1.1;
-    transition: scale 0.5s;
-  }
-  
-  ul.test {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  a{
-    text-decoration: none;  
-  }
-  
-  ul.test li {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 10px 0;
-  }
-  
-  .container {
-    margin: 30px auto;
-    max-width: 100%;
-    width: 500px;
-  }
-  
-  .container h2 {
-    font-weight: 300;
-  }
-  
-  .container p {
-    text-align: center;
-  }
-  
-  .centered {
-    display: flex;
-    justify-content: center;
-  }
-  
-  .centered button {
-    transform: scale(1.3);
-    margin: 15px;
-    cursor:pointer;
-  }
+        .container {
+            margin: 30px auto;
+            max-width: 100%;
+            width: 500px;
+        }
+        
+        .container h2 {
+            font-weight: 300;
+        }
+        
+        .container p {
+            text-align: center;
+        }
+        
+        .centered {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .centered button {
+            transform: scale(1.3);
+            margin: 15px;
+            cursor:pointer;
+        }
 
-  .box{
-    padding: 20px;
-    color: white;
-    margin: 20px;
-    border-radius: 10px;
-    transition: background 1s;
-  }
-  .list:hover{
-    color: black;
-    box-shadow: 0 0 5px 5px rgba(0,0,0,0.15);
-    transition: background 1s box-shadow 1s ease-in-out;
-  }
-  
-  .list{
-    padding: 10px;
-  }
+        .btn {
+            background-color: #8d56fd;
+            border: 0;
+            border-radius: 10px;
+            color: #fff;
+            padding: 4px 10px;
+        }
 
-  .list:hover{
-    background-color: #fff0c2;
-    border-radius: 20px;
-  }
+        .repo_link{
+            text-decoration: none;
+            color:burlywood;
+        }
 
-  .list:hover .comp_icon{
-    background-color: white;
-  }
+        .repo_lang{
+            background-color: rgb(65, 154, 255);
+            color: rgb(0, 0, 0);
+            padding: 5px;
+            width: fit-content;
+            border-radius: 10px;
+        }
 
-  .list:hover .comp_name{
-    color: red;
-  }
+        .dummy_text{
+            text-align: center;
+        }
 
-  .comp_name{
-    color: rgb(212, 79, 79);
-  }
+        .repo_attribute{
+            color: rgb(255, 147, 147);
+        }
 
-  .btn {
-    background-color: #8d56fd;
-    border: 0;
-    border-radius: 10px;
-    color: #fff;
-    padding: 4px 10px;
-  }
+        .repo_attr{
+            color: rgb(193, 250, 78);
+        }
 
+        .repo_user_name{
+            color: rgb(228, 224, 0);
+        }
 
+        @media only screen and (max-width: 800px) {
+            #user_repo {
+                margin: 10px;
+                grid-template-columns: repeat(1, 1fr);
+            }
 
-  /* Calender Modal */
-  /* The Modal (background) */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
+            #user_image{
+                margin: 0 auto;
+            }
 
-/* Modal Content/Box */
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
-}
+            .user{
+                margin: 10px;
+            }
 
-/* The Close Button */
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
+            #user_info{
+                text-align: left;
+                padding-left: 20px;
+            }
+        }
