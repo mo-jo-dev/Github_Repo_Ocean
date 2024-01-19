@@ -110,7 +110,7 @@ e.preventDefault();
             <div class="section1">
                 <img src="./assets/img/404.png" alt="">
                 <p class="one">looks like you are</p>
-                <p class="two">lost somwhere in the space</p>
+                <p class="two">lost somewhere in the space</p>
                 <p style="color: white; font-size:25px">"recheck your username"<p>
             </div>
         `
