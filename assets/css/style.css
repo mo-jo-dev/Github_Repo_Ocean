@@ -126,6 +126,17 @@
             padding: 4px 10px;
         }
 
+        .show_page{
+            display:block; 
+            margin:0 auto; 
+            color: white; 
+            padding: 3px;
+            border-radius: 5px; 
+            background-color:rgb(112, 112, 243); 
+            text-align: center; 
+            width: 15px
+        }
+
         .repo_link{
             text-decoration: none;
             color:burlywood;

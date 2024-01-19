@@ -1,3 +1,12 @@
+const form = document.getElementById("form");
+const search = document.getElementById("search");
+const user_image = document.getElementById("user_image");
+const user_info = document.getElementById("user_info");
+const user_repo = document.getElementById("user_repo");
+const more = document.getElementById("more");
+const astr = document.getElementById("astr");
+const pages = document.getElementById("pages");
+
 function padTo2Digits(num) {
     return num.toString().padStart(2, '0');
   }
@@ -18,14 +27,6 @@ function padTo2Digits(num) {
     );
   }
 
-const form = document.getElementById("form");
-const search = document.getElementById("search");
-const user_image = document.getElementById("user_image");
-const user_info = document.getElementById("user_info");
-const user_repo = document.getElementById("user_repo");
-const more = document.getElementById("more");
-const astr = document.getElementById("astr");
-
 const getRepo = async (user_name, page) => {
     const user_res = await fetch(`https://api.github.com/users/${user_name}`);
     const user_data = await user_res.json();
@@ -36,12 +37,12 @@ const getRepo = async (user_name, page) => {
     user_info.innerHTML = 
     `
         <h2 class="repo_user_name">${user_data.name.toUpperCase()}</h2>
-        <h3 class="repo_attribute">Username: <a href = "https://github.com/${user_data.login}" target = "_blank" class="repo_link">${user_data.login}</a></h3>
+        <h3 class="repo_attribute">Username: <span class="repo_link">${user_data.login}</span><a href = "https://github.com/${user_data.login}" target = "_blank"><img style = "padding-left: 8px; width: 20px;" src="./assets/icons/link.png"></a></h3>
         <p><strong class="repo_attribute">Institution:</strong> ${user_data.company}</p>
-        <p><strong class="repo_attribute">Location:</strong> ${user_data.location}</p>
         <p><strong class="repo_attribute">Public Repositories:</strong> ${user_data.public_repos}</p>
         <p><strong class="repo_attribute">Following:</strong> ${user_data.following}</p>
         <p><strong class="repo_attribute">Followers:</strong> ${user_data.followers}</p>
+        <p style="display:flex; align-items:center;"><img style = "padding-right: 10px; width: 40px" src="./assets/icons/map.png"> ${user_data.location}</p>
     `
 
     const res = await fetch(`https://api.github.com/users/${user_name}/repos?per_page=10&page=${page}`);
@@ -69,7 +70,7 @@ const showRepo = async (data, user_name, public_repos) => {
             `
         ).join('')}
     `
-    
+    pages.innerHTML = `<p class="show_page">${count_}</p>`;
     more.innerHTML = `
         ${count_ > 1 ? `<button class="btn" onclick="getMoreRepos('${user_name}','${public_repos}','prev')">Prev</button>` : ''}
         ${public_repos - 10*count_ > 0 ? `<button class="btn" onclick="getMoreRepos('${user_name}','${public_repos}','next')">Next</button>` : ''}
@@ -116,7 +117,7 @@ e.preventDefault();
         `
     }
     else {
-        astr.innerHTML = `''`;
+        astr.innerHTML = ``;
         getRepo(user_name,1);
     }
 });
