@@ -64,6 +64,8 @@
         .u_img{
             height:250px;
             width: 250px;
+            border-radius: 100%;
+            border: 1px solid gray;
         }
 
         #user_info{
