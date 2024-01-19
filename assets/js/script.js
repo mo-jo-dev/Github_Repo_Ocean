@@ -24,6 +24,7 @@ const user_image = document.getElementById("user_image");
 const user_info = document.getElementById("user_info");
 const user_repo = document.getElementById("user_repo");
 const more = document.getElementById("more");
+const astr = document.getElementById("astr");
 
 const getRepo = async (user_name, page) => {
     const user_res = await fetch(`https://api.github.com/users/${user_name}`);
@@ -102,6 +103,7 @@ e.preventDefault();
         alert("Incorrect Username!! Try Again");
     } 
     else {
+        astr.innerHTML = `''`;
         getRepo(user_name,1);
     }
 });

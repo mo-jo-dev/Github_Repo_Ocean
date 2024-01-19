@@ -1,6 +1,7 @@
         body{
             background-image: url('../img/background.png');z-index: 1;
         }
+
         #search{
             width: 50%;
             padding: 10px;
@@ -58,7 +59,6 @@
 
         #user_image{
             padding: 20px;
-            
         }
 
         .u_img{
@@ -138,7 +138,9 @@
         }
 
         .dummy_text{
-            text-align: center;
+            text-align: left;
+            padding-right: 55px;
+            color: white;
         }
 
         .repo_attribute{
