@@ -104,12 +104,13 @@ e.preventDefault();
         user_image.innerHTML = ``;
         user_info.innerHTML = ``;
         user_repo.innerHTML = ``;
+        more.innerHTML = ``;    
         astr.innerHTML =  
         `
             <div class="section1">
                 <img src="./assets/img/404.png" alt="">
                 <p class="one">looks like you are</p>
-                <p class="two">lost in space</p>
+                <p class="two">lost somwhere in space</p>
                 <p style="color: white; font-size:25px">"recheck your username"<p>
             </div>
         `
